@@ -1,0 +1,7 @@
+<ul id='tickets'>
+  <% @post.comments.each do |comment| %>
+    <li>
+      #<%= comment.id %> - <%= link_to comment.text, [@post, comment] %>
+    </li>
+  <% end %>
+</ul>

@@ -11,13 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120328050157) do
+ActiveRecord::Schema.define(:version => 20120330105316) do
+
+  create_table "comments", :force => true do |t|
+    t.integer  "post_id"
+    t.text     "text"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "posts", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "type"
     t.string   "title"
-    t.string   "subtitle"
     t.string   "text"
     t.string   "image_url"
     t.string   "video_url"
@@ -25,6 +29,7 @@ ActiveRecord::Schema.define(:version => 20120328050157) do
     t.float    "lng"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "post_type"
   end
 
   create_table "users", :force => true do |t|

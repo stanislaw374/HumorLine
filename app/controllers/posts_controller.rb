@@ -2,7 +2,34 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    per_page = 2
+    if (params[:page])
+      @page = params[:page].to_i
+    else
+      @page = 1;
+    end
+    
+    
+    if params[:sort_by]
+      sort_by = params[:sort_by]
+    else
+      sort_by = "created_at"
+    end
+    
+    if params[:ascending]
+      ascending = params[:ascending]
+    else
+      ascending = "DESC"
+    end
+    
+    offset = (@page - 1) * per_page
+    
+    if params[:sort_by] == "distance"
+      
+    else
+       @posts = Post.offset(offset).limit(per_page).order("#{sort_by} #{ascending}")
+    end
+   
 
     respond_to do |format|
       format.html # index.html.erb
