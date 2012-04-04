@@ -7,8 +7,7 @@ class PostsController < ApplicationController
       @page = params[:page].to_i
     else
       @page = 1;
-    end
-    
+    end    
     
     if params[:sort_by]
       sort_by = params[:sort_by]
@@ -25,7 +24,11 @@ class PostsController < ApplicationController
     offset = (@page - 1) * per_page
     
     if params[:sort_by] == "distance"
-      
+      lat = params[:lat]
+      lng = params[:lng]      
+      @posts = Post.find_by_sql(["
+        select *, ACOS(SIN(posts.lat)*SIN(?)+COS(posts.lat)*COS(?)*COS(posts.lng-?))*6371        
+        as distance from posts order by distance asc", lat, lat, lng])      
     else
        @posts = Post.offset(offset).limit(per_page).order("#{sort_by} #{ascending}")
     end
