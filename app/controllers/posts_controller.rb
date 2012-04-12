@@ -2,12 +2,17 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    per_page = 2
     if (params[:page])
       @page = params[:page].to_i
     else
       @page = 1;
     end    
+    
+    if @page == 1 
+      per_page = 5
+    else 
+      per_page = 6
+    end
     
     if params[:sort_by]
       sort_by = params[:sort_by]
@@ -15,11 +20,11 @@ class PostsController < ApplicationController
       sort_by = "created_at"
     end
     
-    if params[:ascending]
-      ascending = params[:ascending]
-    else
-      ascending = "DESC"
-    end
+    #if params[:ascending]
+    #  ascending = params[:ascending]
+    #else
+    #  ascending = "DESC"
+    #end
     
     offset = (@page - 1) * per_page
     
@@ -27,16 +32,18 @@ class PostsController < ApplicationController
       lat = params[:lat]
       lng = params[:lng]      
       @posts = Post.find_by_sql(["
-        select *, ACOS(SIN(posts.lat)*SIN(?)+COS(posts.lat)*COS(?)*COS(posts.lng-?))*6371        
-        as distance from posts order by distance asc", lat, lat, lng])      
+        SELECT *, ACOS(SIN(posts.lat)*SIN(?)+COS(posts.lat)*COS(?)*COS(posts.lng-?))*6371        
+        as distance FROM posts ORDER BY distance ASC LIMIT 100", lat, lat, lng])      
     else
-       @posts = Post.offset(offset).limit(per_page).order("#{sort_by} #{ascending}")
-    end
-   
+       @posts = Post.offset(offset).limit(per_page).order("#{sort_by} DESC")
+    end   
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @posts }
+      #format.json { render json: @posts }
+      format.json do
+        render :json => @posts.to_json(:only => [:id, :title, :text, :lat, :lng, :created_at, :post_type, :likes], :methods => [:image_url, :video_url])
+      end
     end
   end
 
@@ -89,7 +96,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
 
     respond_to do |format|
-      if @post.update_attributes(params[:post])
+      if @post.update_attributes(:likes => @post.likes + 1)
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
         format.json { head :no_content }
       else

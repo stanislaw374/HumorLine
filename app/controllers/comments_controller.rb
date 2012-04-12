@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    @comments = Comment.where("post_id = ?", params[:post_id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -45,6 +45,7 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @comment = @post.comments.build(params[:comment])
+    #@comment = Comment.new(post_id: @post.id, text: params[:text])
     respond_to do |format|
       if @comment.save
         format.html { redirect_to @post, notice: 'Comment was successfully created.' }
