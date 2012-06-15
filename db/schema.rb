@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120410213113) do
+ActiveRecord::Schema.define(:version => 20120507140610) do
 
   create_table "comments", :force => true do |t|
     t.integer  "post_id"
@@ -37,12 +37,6 @@ ActiveRecord::Schema.define(:version => 20120410213113) do
     t.string   "video_content_type"
     t.integer  "video_file_size"
     t.datetime "video_updated_at"
-  end
-
-  create_table "users", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
 end

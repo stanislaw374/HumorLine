@@ -1,3 +1,5 @@
+<h1>Listing comments</h1>
+
 <ul id='tickets'>
   <% @post.comments.each do |comment| %>
     <li>
@@ -5,3 +7,5 @@
     </li>
   <% end %>
 </ul>
+
+<%= link_to 'New comment', new_comment_path %>

@@ -8,7 +8,7 @@
 
 Post.delete_all
 
-#100.times do 
-  Post.create(post_type: 'image', title: 'Image_post', image_url: "http://pics.livejournal.com/che_ratnik/pic/0004adqe", lat: Random.rand(-100...100), lng: Random.rand(-100...100), likes: 0)
-  Post.create(post_type: 'video', title: "Video_post", video_url: "http://www.samkeeneinteractivedesign.com/videos/littleVid3.mp4", lat: Random.rand(-100...100), lng: Random.rand(-100...100), likes: 0)
+#1.times do 
+#  Post.create(post_type: 'image', title: 'Image_post', image_url: "http://pics.livejournal.com/che_ratnik/pic/0004adqe", lat: Random.rand(-100...100), lng: Random.rand(-100...100), likes: 0)
+#  Post.create(post_type: 'video', title: "Video_post", video_url: "http://www.samkeeneinteractivedesign.com/videos/littleVid3.mp4", lat: Random.rand(-100...100), lng: Random.rand(-100...100), likes: 0)
 #end

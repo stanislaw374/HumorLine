@@ -1,7 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-
-
 <p>
   <b>Type:</b>
   <%= @post.post_type %>
@@ -11,8 +9,6 @@
   <b>Title:</b>
   <%= @post.title %>
 </p>
-
-<%= image_tag @post.image.url %>
 
 <p>
   <b>Text:</b>
@@ -27,6 +23,21 @@
 <p>
   <b>Lng:</b>
   <%= @post.lng %>
+</p>
+
+<p>
+  <b>Likes:</b>
+  <%= @post.likes %>
+</p>
+
+<p>
+  <b>Image:</b>
+  <%= image_tag @post.image.url %>
+</p>
+
+<p>
+  <b>Video:</b>
+  <%= link_to 'Watch video', @post.video.url %>
 </p>
 
 
